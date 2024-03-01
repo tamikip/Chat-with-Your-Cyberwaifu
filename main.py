@@ -112,35 +112,26 @@ def mj_draw(prompt, image_name):
 
     payload = {}
     headers = {
-        'Authorization': 'Bearer sk-Lf7dN6r59Dv9KvHM4b353a777a6247F7Bd4729C6B0E87a28',
+        'Authorization': 'Bearer xxxxx',
         'User-Agent': 'Apifox/1.0.0 (https://apifox.com)'
     }
 
     response = requests.request("GET", url2, headers=headers, data=payload)
 
-    # JSON 数据字符串
     json_data = response.text
 
-    # 将 JSON 数据字符串解析成 Python 字典
     data = json.loads(json_data)
 
-    # 提取图片的 URL
+
     image_url = data.get('imageUrl', '')
 
-    # 检查 URL 是否存在
+
     if image_url:
-        # 获取图片的响应内容
+
         response = requests.get(image_url)
-
-        # 检查请求是否成功
         if response.status_code == 200:
-            # 获取图片的内容
             image_content = response.content
-
-            # 设置图片保存的本地路径（确保此路径存在或者有权限写入）
             image_path = f'{image_name}.jpg'
-
-            # 将图片内容写入文件
             with open(image_path, 'wb') as image_file:
                 image_file.write(image_content)
             print(f"你的图片id是{id}，请你记住你的图片id")
@@ -163,7 +154,7 @@ def mj_draw_new(id1, action, index):
         "taskId": id1
     })
     headers = {
-        'Authorization': 'Bearer sk-Lf7dN6r59Dv9KvHM4b353a777a6247F7Bd4729C6B0E87a28',
+        'Authorization': 'Bearer xxxxxx',
         'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
         'Content-Type': 'application/json'
     }
@@ -178,35 +169,25 @@ def mj_draw_new(id1, action, index):
 
     payload = {}
     headers = {
-        'Authorization': 'Bearer sk-Lf7dN6r59Dv9KvHM4b353a777a6247F7Bd4729C6B0E87a28',
+        'Authorization': 'Bearer xxxxxxxxx',
         'User-Agent': 'Apifox/1.0.0 (https://apifox.com)'
     }
 
     response = requests.request("GET", url2, headers=headers, data=payload)
 
-    # JSON 数据字符串
     json_data = response.text
 
-    # 将 JSON 数据字符串解析成 Python 字典
     data = json.loads(json_data)
 
-    # 提取图片的 URL
     image_url = data.get('imageUrl', '')
 
-    # 检查 URL 是否存在
     if image_url:
-        # 获取图片的响应内容
         response = requests.get(image_url)
 
-        # 检查请求是否成功
         if response.status_code == 200:
-            # 获取图片的内容
             image_content = response.content
 
-            # 设置图片保存的本地路径（确保此路径存在或者有权限写入）
             image_path = f'{id}.jpg'
-
-            # 将图片内容写入文件
             with open(image_path, 'wb') as image_file:
                 image_file.write(image_content)
             print(f"你的图片id是{id}，请你记住你的图片id")
@@ -240,7 +221,6 @@ def generate_image(prompt, image_name):
                 else:
                     base64_data = img_data
 
-                # 解码图像数据
                 image_data = base64.b64decode(base64_data)
                 final_image_name = f'{image_name}.png'
                 with open(final_image_name, 'wb') as f:
@@ -257,7 +237,6 @@ file_path = 'data.txt'
 if os.path.exists(file_path):
     print(f" '{file_path}' 存在，加载配置中...")
     with open('data.txt', 'r') as file:
-        # 读取所有行到列表
         lines = file.readlines()
 
     # 分别执行前三行
@@ -267,21 +246,19 @@ if os.path.exists(file_path):
 else:
     print(f"'{file_path}' 不存在，为你重新生成...")
     lines = ["money = 10000\n", "if_local_draw = False\n", "waifu = []\n", "lists_dict = {}\n"]
-    # 使用writelines()写入多行
     with open(file_path, 'w') as file:
         file.writelines(lines)
 
 # 打开文件
 
 
-# 合并第四行到最后一行的命令
 remaining_code = "".join(lines[3:])
 # 执行合并后的代码
 exec(remaining_code)
 while True:
     b = input("您还未配置gpt，请先输入GPT-KEY:\n")
     if b == "admin":
-        openai.api_key = 'sk-Lf7dN6r59Dv9KvHM4b353a777a6247F7Bd4729C6B0E87a28'
+        openai.api_key = 'xxxxxxxx'
         print("已经启用管理员模式！")
         break
     else:
@@ -305,7 +282,6 @@ while True:
             print("人设生成中，请稍等...（大约两分钟）")
             renshe = cyberwaifu()
             print("抽卡成功！")
-            # 查找名字这一行的内容
             lines = renshe.splitlines()
             for line in lines:
                 if '名字' in line:
@@ -316,7 +292,7 @@ while True:
                     break
             waifu.append(name)
             with open('data.txt', 'r') as file:
-                lines = file.readlines()  # 读取所有行到一个列表中
+                lines = file.readlines()  
                 lines[2] = f"waifu = {waifu}\n"
             with open('data.txt', 'w') as file:
                 file.writelines(lines)
